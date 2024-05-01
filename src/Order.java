@@ -12,7 +12,7 @@ abstract class Order {
     String dataOfWorker ;
     int numberOfProducts ;
 
-    //constractor
+    //constractors
     Order(){}
 
     Order (Date date, String dataOfWorker ,String dataOfCustomer ){
