@@ -1,16 +1,13 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.control.RadioButton;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -20,6 +17,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        //-----------------------------------------
+        //-------making the needed nodes--------------
+        //-----------------------------------------
+
         //text needed
         Text Name = new Text("Name : ");
         Text address = new Text("address : ");
@@ -28,6 +30,7 @@ public class Main extends Application {
         Text phoneNo = new Text("Phone number : ");
         Text tableNo = new Text("table Number : ");
         Text numberOfPeople = new Text("number of people : ");
+        Text priceTx = new Text("total price : ");
 
         welcome.setFont(new Font(20));
 
@@ -36,10 +39,13 @@ public class Main extends Application {
         // text fieldes
         TextField fnamefild = new TextField();
         TextField addressfild = new TextField();
-        TextField orderfild = new TextField();
+        TextField pricefild = new TextField();
         TextField phoneNofild = new TextField();
         TextField tableNofild = new TextField();
         TextField numberOfPeoplefild = new TextField();
+
+        //edit some text fields
+        pricefild.setEditable(false);
 
 
         // buttons
@@ -50,6 +56,71 @@ public class Main extends Application {
         RadioButton inStoreOrder_RadioButton = new RadioButton("in store order");
         RadioButton takeAwayOrder_RadioButton = new RadioButton("take away order");
         CheckBox ch1 = new CheckBox();
+
+        //dropdown menu
+        ComboBox<String> foodComboBox = new ComboBox<>();
+        foodComboBox.getItems().addAll("Burger", "Pizza", "Salad", "Sandwich");
+        foodComboBox.setPromptText("Choose what to eat");
+
+
+
+
+        //dsiplay the price
+        foodComboBox.setOnAction(event -> {
+
+            String selectedItem = foodComboBox.getValue();
+            //double price = getPrice(selectedItem);
+            pricefild.setText( selectedItem + " EGP");
+        });
+
+        //-----------------------------------------
+        //-------logical main - driver --------------
+        //-----------------------------------------
+        placeOrderBtm.setOnAction(e -> {
+
+            if(inStoreOrder_RadioButton.isSelected()){
+                Reservation r1 = new Reservation(fnamefild.getText(),Integer.valueOf(tableNofild.getText()) ,Integer.valueOf( numberOfPeoplefild.getText() ) );
+                System.out.println("in store order");
+
+
+            } else if (takeAwayOrder_RadioButton.isSelected()) {
+                DeliveryOrder d1 = new DeliveryOrder(fnamefild.getText() , addressfild.getText() , Long.valueOf( phoneNofild.getText() )) ;
+                System.out.println("in take away order");
+
+
+            }
+        });
+
+        cancelBtm.setOnAction( e -> {
+            //clear every thing
+            inStoreOrder_RadioButton.setSelected(false);
+            takeAwayOrder_RadioButton.setSelected(false);
+            fnamefild.clear();
+            addressfild.clear();
+            phoneNofild.clear();
+            numberOfPeoplefild.clear();
+            tableNofild.clear();
+            //foodComboBox.cancelEdit();
+            foodComboBox.setValue(null);
+            pricefild.clear();
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+        //-----------------------------------------
+        //-------design layout and ui--------------
+        //-----------------------------------------
 
         //make a big vbox pane
         VBox bigVbox = new VBox();
@@ -68,13 +139,26 @@ public class Main extends Application {
         mainPane.add(phoneNofild, 1,2);
         mainPane.add(numberOfPeoplefild, 1,3);
         mainPane.add(tableNofild, 1,4);
-        mainPane.add(placeOrderBtm, 2,5);
-        mainPane.add(cancelBtm, 1,5);
+        //mainPane.add(placeOrderBtm, 2,6);
+        //mainPane.add(cancelBtm, 1,6);
+
+        mainPane.add(priceTx, 1,6);
+        mainPane.add(pricefild, 2,6);
+
+        mainPane.add(order, 0,5);
+        mainPane.add(foodComboBox, 1,5);
        // mainPane.setPadding(new Insets(50));
 
 
+        //stack pane for the buttoms
+        HBox buttoms_Pane = new HBox();
+        buttoms_Pane.getChildren().addAll(cancelBtm ,placeOrderBtm );
+
+
+
+
         //add nodes to the bigVbox
-        bigVbox.getChildren().addAll(centered_pane ,inStoreOrder_RadioButton,takeAwayOrder_RadioButton, mainPane);
+        bigVbox.getChildren().addAll(centered_pane ,inStoreOrder_RadioButton,takeAwayOrder_RadioButton, mainPane ,buttoms_Pane);
         bigVbox.setPadding(new Insets(40));
         bigVbox.setSpacing(30);
 
@@ -122,11 +206,12 @@ public class Main extends Application {
             }
         });
 
+
             // set background
             Image oraginal_image = new Image("images/resphoto.jpeg") ;
             ImageView backgroundimageView = new ImageView(oraginal_image);
-            backgroundimageView.setFitWidth(400);
-            backgroundimageView.setFitHeight(400);
+            backgroundimageView.setFitWidth(525);
+            backgroundimageView.setFitHeight(500);
             backgroundimageView.setOpacity(0.4);
 
             Image modifiedImage = backgroundimageView.snapshot(null, null);
@@ -139,7 +224,7 @@ public class Main extends Application {
 
 
         // set scene ,and put pane on scence
-        Scene s1 = new Scene(bigVbox,400,400);
+        Scene s1 = new Scene(bigVbox,525,500);
 
 
 
