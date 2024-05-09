@@ -13,16 +13,16 @@ abstract class Order {
     int numberOfProducts ;
 
     String customerName;
-    long customerPhone;
+
 
     //constractors
     Order(){}
 
-    Order (Date date,String dataOfWorker ,String customerName,long customerPhone){
-        this.dateOfOrder = date ;
-        this.dataOfWorker= dataOfWorker ;
+    Order (String customerName){
+        //this.dateOfOrder = date ;
+       // this.dataOfWorker= dataOfWorker ;
         this.customerName = customerName;
-        this.customerPhone = customerPhone;
+
     }
 
     //methods
