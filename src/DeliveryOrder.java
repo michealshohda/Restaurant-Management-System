@@ -1,13 +1,17 @@
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class DeliveryOrder extends Order {
-    private String customerAddress; 
+    private String customerAddress;
+    private long customerPhone;
     private boolean isDelivered;
 
 
-    public DeliveryOrder(LocalDateTime OrderDateTime, String dataOfWorker ,String customerName,long customerPhone,String customerAddress) {
-        super( OrderDateTime, dataOfWorker , customerName, customerPhone);
+
+    public DeliveryOrder( String customerName, String customerAddress , long customerPhone) {
+        super( customerName);
         this.customerAddress = customerAddress;
+        this.customerPhone =customerPhone;
         this.isDelivered = false;
     }
     
@@ -57,6 +61,14 @@ public class DeliveryOrder extends Order {
     @Override
     int ordering(String wayOfOrder, int numberOfProducts) {
         return 0;
+    }
+
+    public long getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(long customerPhone) {
+        this.customerPhone = customerPhone;
     }
     
 }
