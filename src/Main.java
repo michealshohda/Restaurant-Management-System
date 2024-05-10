@@ -125,7 +125,7 @@ public class Main extends Application {
                     flag = false;
                 }
                 if (flag) {
-                    //addes new object refrance to the array list
+                    //addes new object refrence to the array list
                     ordersList.add(r1) ;
                     //update the order counter
                     ordersCountfild.setText(String.valueOf(ordersList.size()));
