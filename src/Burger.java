@@ -5,7 +5,7 @@ interface Eatable {
 
 
 
-public class Burger extends Item{
+public class Burger extends Item  implements Eatable{
     //Data Fileds
     private String burgerType;
     private String noOfPatties;

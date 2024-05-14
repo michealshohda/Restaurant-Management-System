@@ -1,6 +1,6 @@
 
 
-public class Sandwich extends Item{
+public class Sandwich extends Item implements Eatable{
     private String filling;
     private String typeOfBread;
     Sandwich(String filling,String typeOfBread,double price){

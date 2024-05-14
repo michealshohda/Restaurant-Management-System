@@ -1,6 +1,6 @@
 
 
-public class Salad extends Item{
+public class Salad extends Item implements Eatable{
     //Data fields
     private String type;
     private String topping;
